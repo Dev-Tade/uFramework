@@ -11,16 +11,13 @@ export class Root {
     return Root.instance;
   }
 
-  fromElement(child) {
+  appendChild(child) {
     this.root_elem.appendChild(child);
   }
 
-  fromFactory(fact) {
-    console.log(fact);
-    let foo = document.createElement(fact._tag);
-    foo.textContent = fact._textContent;
-    foo.id = fact._id;
-
-    this.fromElement(foo);
+  clearChilds() {
+    while(this.root_elem.firstChild) {
+      this.root_elem.firstChild.remove();
+    }
   }
 }

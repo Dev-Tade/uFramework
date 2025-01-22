@@ -7,12 +7,14 @@ export class Root {
     this.#isInitialized = true;
   } 
 
-  static present(child) {
+  static present(...childs) {
     if (!this.#isInitialized) {
       throw new Error("Cannot present on a uninitialized root");
     }
 
-    this.#root.appendChild(child);
+    childs.forEach(child => {
+      this.#root.appendChild(child);
+    });
   }
 
   static clear() {

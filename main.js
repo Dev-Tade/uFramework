@@ -19,14 +19,13 @@ function nav_bar() {
 }
 
 export function sub_page() {
-  Root.clear();
-    nav_bar();
-    Root.present(
-      div(
-        h1("Sub page"),
-        p(LOREM)
-      )
-    );
+  nav_bar();
+  Root.present(
+    div(
+      h1("Sub page"),
+      p(LOREM)
+    )
+  );
 }
 
 export function main() {
@@ -37,6 +36,9 @@ export function main() {
     div(
       h1("Hello World"),
       div(img("foo.jpeg").$attr("width", "80"))
-    )
+    ),
+
+    button("foo")
+      .$onclick( () => { console.log(v_h1("hello")); })
   );
 }

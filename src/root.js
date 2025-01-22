@@ -1,23 +1,27 @@
 export class Root {
-  constructor() {
-    this.root_elem = document.getElementById("root");
-  }
+  static #root;
+  static #isInitialized = false;
 
-  static getInstance() {
-    if (!Root.instance) {
-      Root.instance = new Root();
+  static #init() {
+    this.#root = document.getElementById('root');
+    this.#isInitialized = true;
+  } 
+
+  static present(child) {
+    if (!this.#isInitialized) {
+      throw new Error("Cannot present on a uninitialized root");
     }
 
-    return Root.instance;
+    this.#root.appendChild(child);
   }
 
-  appendChild(child) {
-    this.root_elem.appendChild(child);
-  }
+  static clear() {
+    if (!this.#isInitialized) {
+      this.#init();
+    }
 
-  clearChilds() {
-    while(this.root_elem.firstChild) {
-      this.root_elem.firstChild.remove();
+    while(this.#root.firstChild) {
+      this.#root.firstChild.remove();
     }
   }
 }

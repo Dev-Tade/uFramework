@@ -50,3 +50,7 @@ export function h3(t) {
 export function p(t) {
   return tag("p", text(t));
 }
+
+export function button(t) {
+  return tag("button", text(t));
+}

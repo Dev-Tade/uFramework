@@ -13,7 +13,11 @@ function nav_bar() {
 
       button("sub")
         .$attr("class", "nav_button")
-        .$onclick( () => { Router.navigate('/sub'); } )
+        .$onclick( () => { Router.navigate('/sub'); } ),
+      
+      button("foo")
+        .$attr("class", "nav_button")
+        .$onclick( () => { Router.navigate('/foo', {fooId: 1, barId:"Hello World"}); } )
     ).$attr("class", "nav_bar")
   );
 }
@@ -37,8 +41,12 @@ export function main() {
       h1("Hello World"),
       div(img("foo.jpeg").$attr("width", "80"))
     ),
-
-    button("foo")
-      .$onclick( () => { console.log(v_h1("hello")); })
   );
+}
+
+export function foo(params)
+{
+  for (let key in params) {
+    Root.present(h1(`${key} => ${params[key]}`));
+  }
 }

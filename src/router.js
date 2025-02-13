@@ -19,33 +19,23 @@ export class Router {
     }
 
     this.#isInitialized = true;
-    
-    const oldPushState = history.pushState;
-    const oldReplaceState = history.replaceState;
-    
-    history.pushState = (data, unused, url) => {
-      oldPushState.call(history, data, unused, url);
-      Router.stateChange();
-    };
 
-    history.replaceState = (data, unused, url) => {
-      oldReplaceState.call(history, data, unused, url);
-      Router.stateChange();
-    };
-
-    window.addEventListener('popstate', () => {
-      this.stateChange();
+    window.addEventListener('hashchange', () => {
+      this.hashChange();
     });
+
+    this.hashChange(); // Trigger initial state
   }
 
-  static stateChange() {
+  static hashChange() {
     if (!this.#isInitialized) {
       throw new Error("No router is initialized");
     }
 
-    const url = new URL(window.location.href);
-    const path = url.pathname;
-    const params = Object.fromEntries(url.searchParams.entries());
+    const hash = window.location.hash || "#";
+    const [path, query_string] = hash.split('?');
+    const query_params = new URLSearchParams(query_string || '');
+    const params = Object.fromEntries(query_params.entries());
 
     const target = this.#routes[path];
 
@@ -65,8 +55,7 @@ export class Router {
       throw new Error("Cannot navigate with an uninitialzed router");
     }
 
-    const current_path = window.location.pathname;
-
+    const current_path = window.location.hash;
     if (new_path == current_path) return; // Prevent going to the page you already are
 
     let params = new URLSearchParams();
@@ -78,7 +67,6 @@ export class Router {
       new_path = `${new_path}?${params.toString()}`;
     }
 
-    history.pushState({}, "", new_path); // Save new page to history
-    this.stateChange(); // History.pushState doesn't trigger a popstate apparently
+    window.location.hash = new_path;
   }
 }

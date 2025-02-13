@@ -9,15 +9,15 @@ function nav_bar() {
     div(
       button("main")
         .$attr("class", "nav_button")
-        .$onclick( () => { Router.navigate('/main'); } ),
+        .$onclick( () => { Router.navigate('#main'); } ),
 
       button("sub")
         .$attr("class", "nav_button")
-        .$onclick( () => { Router.navigate('/sub'); } ),
+        .$onclick( () => { Router.navigate('#sub'); } ),
       
       button("foo")
         .$attr("class", "nav_button")
-        .$onclick( () => { Router.navigate('/foo', {fooId: 1, barId:"Hello World"}); } )
+        .$onclick( () => { Router.navigate('#foo', {fooId: 1, barId:"Hello World"}); } )
     ).$attr("class", "nav_bar")
   );
 }

@@ -4,5 +4,5 @@ import { Router } from "./router.js";
 
 document.addEventListener('DOMContentLoaded', () => {
   Root.clear();
-  Router.stateChange();
+  Router.hashChange();
 });
